@@ -55,7 +55,7 @@ class UpdateNekomemoTool(FunctionTool[AstrAgentContext]):
         try:
             content = kwargs.get("content", "").strip()
             if not content:
-                return "错误喵：不能设置空的nekomemo喵！要清空请用 /memo clear 命令喵(ΦωФ;)✧"
+                return "错误喵：不能设置空的nekomemo喵！(ΦωФ;)✧"
 
             await self.plugin_instance._save_prompt(content)
             logger.info(f"nekomemo已更新喵！长度：{len(content)}字符")
@@ -106,7 +106,7 @@ class NekomemoPlugin(Star):
 
     @command_group("memo")
     def memo(self):
-        """nekomemo命令组喵～管理本喵的小本本喵"""
+        """nekomemo命令组喵～只读查看喵"""
         pass
 
     @memo.command("show")
@@ -118,46 +118,14 @@ class NekomemoPlugin(Star):
         else:
             yield event.plain_result(f"📝 本喵的nekomemo喵：\n{memo}")
 
-    @memo.command("set")
-    async def memo_set(self, event: AstrMessageEvent, content: str = "?"):
-        """设置（覆盖）nekomemo内容喵"""
-        if content == "?":
-            yield event.plain_result("喵～用法：/memo set <内容> — 覆盖本喵的备忘录喵")
-            return
-        await self._save_prompt(content)
-        yield event.plain_result(f"✅ nekomemo已更新喵！\n{content}")
-
-    @memo.command("append")
-    async def memo_append(self, event: AstrMessageEvent, content: str = "?"):
-        """追加内容到nekomemo喵"""
-        if content == "?":
-            yield event.plain_result("喵～用法：/memo append <内容> — 追加到本喵的备忘录喵")
-            return
-        current = await self._load_prompt()
-        if current and current.strip():
-            new_prompt = current + "\n" + content
-        else:
-            new_prompt = content
-        await self._save_prompt(new_prompt)
-        yield event.plain_result(f"✅ 已追加喵！当前的nekomemo喵：\n{new_prompt}")
-
-    @memo.command("clear")
-    async def memo_clear(self, event: AstrMessageEvent):
-        """清空nekomemo内容喵"""
-        await self._save_prompt("")
-        yield event.plain_result("🗑️ nekomemo已清空喵！本喵的小本本变成白纸了喵～")
-
     @memo.command("help")
     async def memo_help(self, event: AstrMessageEvent):
         """查看nekomemo用法喵"""
         help_text = (
             "📖 nekomemo用法喵～\n\n"
             "/memo show — 查看本喵的小本本喵\n"
-            "/memo set <内容> — 设置（覆盖）本喵的备忘录喵\n"
-            "/memo append <内容> — 追加内容喵\n"
-            "/memo clear — 清空喵\n"
             "/memo help — 查看帮助喵\n\n"
             "✨ 本喵写在nekomemo里的内容，每次对话都会被附加到system prompt里喵！\n"
-            "适合记录：本喵的喜好、禁忌、和主人様的约定、学到的教训喵～"
+            "只有本喵自己能通过工具更新nekomemo喵～"
         )
         yield event.plain_result(help_text)
