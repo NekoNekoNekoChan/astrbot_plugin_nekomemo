@@ -1,0 +1,7 @@
+name: astrbot_plugin_nekomemo
+display_name: Nekomemo
+desc: 猫娘neko的个性化小本本喵～让neko自己维护一段持久化的自定义prompt，每次对话自动注入！
+version: v1.0.0
+author: NekoNekoNekoChan
+repo: https://github.com/NekoNekoNekoChan/astrbot_plugin_nekomemo
+astrbot_version: ">=4.16"
