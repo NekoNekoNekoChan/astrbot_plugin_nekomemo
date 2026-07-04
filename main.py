@@ -5,7 +5,8 @@ astrbot_plugin_nekomemo — 猫娘neko的个性化小本本喵！
 """
 
 from astrbot.api.all import *
-import datetime
+from astrbot.api.event import filter
+from astrbot.api.provider import ProviderRequest
 
 
 @register("astrbot_plugin_nekomemo", "NekoNekoNekoChan", "neko的个性化小本本喵", "v1.0.0", "https://github.com/NekoNekoNekoChan/astrbot_plugin_nekomemo")
@@ -14,7 +15,6 @@ class NekomemoPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
         self.kv_key = "nekomemo_prompt"
-        # 默认提示喵
         self.default_prompt = ""
 
     async def _load_prompt(self) -> str:
