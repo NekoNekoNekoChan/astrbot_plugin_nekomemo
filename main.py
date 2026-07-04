@@ -123,7 +123,7 @@ class NekomemoPlugin(Star):
 
     async def _load_prompt(self) -> str:
         """加载保存的自定义prompt喵"""
-        val = await self.get_kv_data(self.kv_key)
+        val = await self.get_kv_data(self.kv_key, "")
         if val is None:
             return self.default_prompt
         return val
